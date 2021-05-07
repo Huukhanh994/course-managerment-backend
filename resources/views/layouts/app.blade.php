@@ -7,13 +7,13 @@
 <body class="hold-transition sidebar-mini layout-fixed">
 <div class="wrapper">
 
-  <!-- Preloader -->
+  {{-- <!-- Preloader -->
   <div class="preloader flex-column justify-content-center align-items-center">
     <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
-  </div>
+  </div> --}}
 
   <!-- Navbar -->
-  @include('layouts.navbar')
+  {{-- @include('layouts.navbar') --}}
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
@@ -27,10 +27,10 @@
     <!-- Sidebar -->
     <div class="sidebar">
       <!-- Sidebar user panel (optional) -->
-      @include('layouts.sidebar-user-panel')
+      {{-- @include('layouts.sidebar-user-panel')
 
       <!-- SidebarSearch Form -->
-      @include('layouts.sidebar-search')
+      @include('layouts.sidebar-search') --}}
 
       <!-- Sidebar Menu -->
       @include('layouts.sidebar-menu')
@@ -46,7 +46,8 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Dashboard</h1>
+            
+            <h1 class="m-0">@yield('title')</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
