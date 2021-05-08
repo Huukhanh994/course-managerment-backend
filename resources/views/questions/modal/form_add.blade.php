@@ -42,7 +42,9 @@
                             <label for="exampleInputPassword1">Thuộc chương</label>
                             <select class="form-control select-chapter" name="chapter_id">
                                 <option value="">--Chọn Chương--</option>
-                                
+                                @foreach ($data['chapters'] as $item)
+                                <option value="{{$item['chapter_id']}}">{{ $item['chapter_name'] }}</option>
+                                @endforeach
                                 
                             </select>
                         </div>

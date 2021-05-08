@@ -7,7 +7,8 @@
     <div class="card">
         <div class="card-header">
             <a href="{{ route('questions.form') }}" class="btn btn-info" data-toggle="modal"
-                data-target="#modal-lg-add">Add</a>
+                data-target="#modal-lg-add">Thêm đáp án</a>
+                @include('answers.modal.form_add',['data' => $data])
         </div>
         <!-- /.card-header -->
         <div class="card-body">
@@ -19,7 +20,7 @@
                         <th>Đáp án đúng</th>
                         <th>Trạng thái</th>
                         <th>Thuộc câu hỏi</th>
-                        <th>Thuộc đề this</th>
+                        <th>Thuộc đề thi </th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -42,13 +43,12 @@
                                 <input type="checkbox" name="" id="" data-id="{{$item['answer_id']}}" checked class="changeActive">
                                 @endif
                             </td>
-                            <td>{{$item['answer_active']}}</td>
                             <td>{{$item->question['question_name']}}</td>
                             <td></td>
                             <td>
-                                <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#modal-lg-edit{{$item['answer_id']}}">Edit </a>
+                                <a href="#" class="btn btn-warning" data-toggle="modal" data-target="#modal-lg-edit{{$item['answer_id']}}">Sửa </a>
                                 <button type="button" class="btn btn-danger btn-delete" data-id="{{ $item['answer_id'] }}">
-                                    Delete
+                                    Xóa
                                 </button>
                             </td>
                             @include('answers.modal.form_edit',['answers' => $answers,'dataQuestions' => $data['questions'],'dataExams' => $data['exams']])
@@ -154,9 +154,32 @@
             confirmButtonText: `Yes`,
             denyButtonText: `No`,
             }).then((result) => {
+              $.ajax({
+              type: "GET",
+              url: "answers/changeCorrect/"+answerId,
+              success: function (response) {
+                /* Read more about isConfirmed, isDenied below */
+                if (response.success) {
+                  Swal.fire('Saved!', '', 'success')
+                } else if (response.error) {
+                  Swal.fire('Changes are not saved', '', 'info')
+                }
+                }
+              });
+            })
+        })
+        $('.changeActive').click(function() {
+          var answerId = $(this).data('id');
+          Swal.fire({
+          title: 'Do you want change active answer ?',
+          showDenyButton: true,
+          showCancelButton: true,
+          confirmButtonText: `Yes`,
+          denyButtonText: `No`,
+          }).then((result) => {
             $.ajax({
             type: "GET",
-            url: "answers/changeCorrect/"+answerId,
+            url: "answers/changeActive/"+answerId,
             success: function (response) {
             /* Read more about isConfirmed, isDenied below */
             if (response.success) {
@@ -166,30 +189,7 @@
             }
             }
             });
-            })
-        })
-        $('.changeActive').click(function() {
-        var answerId = $(this).data('id');
-        Swal.fire({
-        title: 'Do you want change active answer ?',
-        showDenyButton: true,
-        showCancelButton: true,
-        confirmButtonText: `Yes`,
-        denyButtonText: `No`,
-        }).then((result) => {
-        $.ajax({
-        type: "GET",
-        url: "answers/changeActive/"+answerId,
-        success: function (response) {
-        /* Read more about isConfirmed, isDenied below */
-        if (response.success) {
-        Swal.fire('Saved!', '', 'success')
-        } else if (response.error) {
-        Swal.fire('Changes are not saved', '', 'info')
-        }
-        }
-        });
-        })
+          })
         })
         $(".btn-delete").click(function() {
           var answerId = $(this).data('id');

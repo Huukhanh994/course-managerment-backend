@@ -50,7 +50,7 @@ class QuestionsController extends Controller
 
     public function delete(Request $request)
     {
-        $delete = Question::whereQuestionId($request->quesId)->delete();
+        $delete = Question::whereQuestionId($request->questionId)->delete();
 
         if ($delete) {
             return response()->json(['success' => 'Xóa câu hỏi thành công']);

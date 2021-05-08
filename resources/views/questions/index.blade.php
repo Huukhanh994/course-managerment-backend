@@ -161,7 +161,7 @@
         });
 
         $(".btn-delete").click(function() {
-          var quesId = $(this).data('id');
+          var questionId = $(this).data('id');
           Swal.fire({
           title: 'Do you want dele?',
           showDenyButton: true,
@@ -171,13 +171,13 @@
           }).then((result) => {
             $.ajax({
                 type: "GET",
-                url: "questions/delete/"+quesId,
+                url: "questions/delete/"+questionId,
                 success: function (response) {
                   /* Read more about isConfirmed, isDenied below */
                   if (response.success) {
-                  Swal.fire('Saved!', '', 'success')
+                  Swal.fire('Saved!', response.success, 'success')
                   } else if (response.error) {
-                  Swal.fire('Changes are not saved', '', 'info')
+                  Swal.fire('Changes are not saved', response.error, 'error')
                   }
                 }
               });

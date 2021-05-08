@@ -26,6 +26,36 @@ class AnswersController extends Controller
         return view('answers.index', compact('answers', 'data'));
     }
 
+    public function store(Request $request)
+    {
+        $input = $request->except('_token');
+        if (isset($input['answer_correct']) && $input['answer_correct'] == 'on') {
+            $input['correct'] = 1;
+        } else {
+            $input['correct'] = 0;
+        }
+
+        if (isset($input['answer_active']) && $input['answer_active'] == 'on') {
+            $input['active'] = 1;
+        } else {
+            $input['active'] = 0;
+        }
+
+        $result = Answer::create([
+            'answer_content' => $input['answer_content'],
+            'answer_correct' => $input['correct'],
+            'answer_active' => $input['active'],
+            'exam_id' => $input['exam_id'],
+            'question_id' => $input['question_id'],
+        ]);
+
+        if ($result) {
+            return redirect()->route('answers.index')->with('success', 'Thêm đáp án thành công');
+        } else {
+            return redirect()->route('answers.index')->with('error', 'Thêm đáp án thất bại');
+        }
+    }
+
     public function delete(Request $request)
     {
         $delete = Answer::whereAnswerId($request->answerId)->delete();
@@ -46,6 +76,8 @@ class AnswersController extends Controller
 
         if ($result) {
             return response()->json(['success' => 'Cập nhật thành công']);
+        } else {
+            return response()->json(['error' => 'Cập nhật thất bại']);
         }
     }
 
@@ -58,6 +90,8 @@ class AnswersController extends Controller
 
         if ($result) {
             return response()->json(['success' => 'Cập nhật thành công']);
+        } else {
+            return response()->json(['error' => 'Cập nhật thất bại']);
         }
     }
 

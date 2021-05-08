@@ -48,7 +48,13 @@
                             <label for="exampleInputPassword1">Thuộc chương</label>
                             <select class="form-control select-chapter" name="chapter_id">
                                 <option value="">--Chọn Chương--</option>
-
+                                @foreach ($data['chapters'] as $val)
+                                @if ($item['chapter_id'] == $val['chapter_id'])
+                                <option value="{{ $val['chapter_id'] }}" selected>{{ $val['chapter_name'] }}</option>
+                                @else
+                                <option value="{{ $val['chapter_id'] }}">{{ $val['chapter_name'] }}</option>
+                                @endif
+                                @endforeach
 
                             </select>
                         </div>

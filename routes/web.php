@@ -3,9 +3,7 @@
 use App\Http\Controllers\AnswersController;
 use App\Http\Controllers\SubjectController;
 use App\Http\Controllers\ChapterController;
-use App\Http\Controllers\ExamController;
 use App\Http\Controllers\ExamStructureController;
-use App\Http\Controllers\QuestionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExamsController;
 use App\Http\Controllers\QuestionsController;
@@ -44,7 +42,7 @@ Route::prefix('questions')->name('questions.')->group(function () {
     Route::post('form', [QuestionsController::class, 'form'])->name('form');
     Route::post('/store', [QuestionsController::class, 'store'])->name('store');
     Route::post('{question}/update', [QuestionsController::class, 'update'])->name('update');
-    Route::get('/delete/{question}', [QuestionsController::class, 'delete'])->name('delete');
+    Route::get('/delete/{questionId}', [QuestionsController::class, 'delete'])->name('delete');
     Route::get('answers/{question}/add', [QuestionsController::class, 'addAnswers'])->name('answers.add');
     Route::post('answers/{question}/store', [QuestionsController::class, 'storeAnswers'])->name('answers.store');
 });
@@ -52,19 +50,23 @@ Route::prefix('exams')->name('exams.')->group(function () {
     Route::get('/', [ExamsController::class, 'index'])->name('index');
     Route::post('/store', [ExamsController::class, 'store'])->name('store');
     Route::get('/delete/{exam}', [ExamsController::class, 'delete'])->name('delete');
+    Route::post('/storeRandom', [ExamsController::class, 'storeRandom'])->name('storeRandom');
 });
 Route::prefix('exam-structures')->name('exam_structures.')->group(function () {
     Route::get('/', [ExamStructureController::class, 'index'])->name('index');
     Route::post('/store', [ExamStructureController::class, 'store'])->name('store');
+    Route::post('/storeExamStructure', [ExamStructureController::class, 'storeExamStructure'])->name('storeExamStructure');
     Route::get('{exam}/show', [ExamStructureController::class, 'show'])->name('show');
     Route::get('{exam}/random', [ExamStructureController::class, 'randomExam'])->name('random');
     Route::get('{exam}/downloadPdf', [ExamStructureController::class, 'downloadPdf'])->name('downloadPdf');
     Route::delete('/{exam_structure}/delete', [ExamStructureController::class, 'delete'])->name('delete');
+    Route::post('/{id}/update', [ExamStructureController::class, 'update'])->name('update');
 });
 
 Route::prefix('answers')->name('answers.')->group(function () {
     Route::get('/', [AnswersController::class, 'index'])->name('index');
     Route::post('/{answer}/update', [AnswersController::class, 'update'])->name('update');
+    Route::post('/store', [AnswersController::class, 'store'])->name('store');
     Route::get('/delete/{answerId}', [AnswersController::class, 'delete'])->name('delete');
     Route::get('/changeCorrect/{answerId}', [AnswersController::class, 'changeCorrect'])->name('changeCorrect');
     Route::get('/changeActive/{answerId}', [AnswersController::class, 'changeActive'])->name('changeActive');

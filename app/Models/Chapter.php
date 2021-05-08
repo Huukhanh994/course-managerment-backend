@@ -49,4 +49,9 @@ class Chapter extends Model
 	{
 		return $this->hasMany(Question::class);
 	}
+
+	public function examStructures()
+	{
+		return $this->hasMany(ExamStructure::class, 'chapter_id');
+	}
 }

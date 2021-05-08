@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Chapter;
 use App\Models\Exam;
+use App\Models\ExamStructure;
 use App\Models\Question;
 use Illuminate\Http\Request;
 use PDF;
@@ -16,7 +18,9 @@ class ExamStructureController extends Controller
      */
     public function index()
     {
-        return view('exam_structure.show');
+        $examStructures = ExamStructure::all();
+        $data = Chapter::all();
+        return view('exam_structures.index', compact('examStructures', 'data'));
     }
 
     /**
@@ -59,6 +63,23 @@ class ExamStructureController extends Controller
         return response()->download(storage_path('helloWorld.docx'));
     }
 
+    public function storeExamStructure(Request $request)
+    {
+        $input = $request->except('_token');
+        $examStructures = ExamStructure::create([
+            'exam_structure_quantity' => $input['exam_structure_quantity'],
+            'exam_structure_name' => $input['exam_structure_name'],
+            'exam_structure_ez' => $input['exam_structure_ez'],
+            'exam_structure_me' => $input['exam_structure_me'],
+            'exam_structure_ha' => $input['exam_structure_ha'],
+            'chapter_id' => $input['chapter_id'],
+        ]);
+
+        if ($examStructures) {
+            return redirect()->route('exam_structures.index')->with('success', 'Thêm cấu trúc đề thành công');
+        }
+    }
+
     /**
      * Display the specified resource.
      *
@@ -68,7 +89,7 @@ class ExamStructureController extends Controller
     public function show($id)
     {
         $exam = Exam::with('questions')->whereExamId($id)->first();
-        return view('exam_structure.show', compact('exam'));
+        return view('exam_structures.show', compact('exam'));
     }
 
     /**
@@ -91,7 +112,18 @@ class ExamStructureController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $input = $request->except('_token');
+        $result = ExamStructure::whereExamStructureId($id)->update([
+            'exam_structure_name' => $input['exam_structure_name'],
+            'exam_structure_quantity' => $input['exam_structure_quantity'],
+            'exam_structure_ez' => $input['exam_structure_ez'],
+            'exam_structure_me' => $input['exam_structure_me'],
+            'exam_structure_ha' => $input['exam_structure_ha'],
+
+        ]);
+        if ($result) {
+            return redirect()->route('exam_structures.index')->with('success', 'Cập nhật thành công');
+        }
     }
 
     /**
@@ -109,14 +141,14 @@ class ExamStructureController extends Controller
     {
         $randomQuestions = Question::with('answers')->inRandomOrder()->limit(2)->get();
 
-        return view('exam_structure.show', compact('randomQuestions', 'exam'));
+        return view('exam_structures.show', compact('randomQuestions', 'exam'));
     }
 
     public function downloadPdf(Exam $exam)
     {
         $randomQuestions = Question::with('answers')->inRandomOrder()->limit(2)->get();
 
-        $pdf = PDF::loadView('exam_structure.show', compact('randomQuestions', 'exam'));
+        $pdf = PDF::loadView('exam_structures.show', compact('randomQuestions', 'exam'));
         return $pdf->download('pdfview.pdf');
     }
 }

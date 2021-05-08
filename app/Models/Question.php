@@ -52,4 +52,9 @@ class Question extends Model
     {
         return $this->belongsToMany(Exam::class, 'exam_questions', 'question_id', 'exam_id');
     }
+
+    public function examStructures()
+    {
+        return $this->hasMany(ExamStructure::class, 'question_id');
+    }
 }

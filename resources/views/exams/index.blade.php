@@ -6,8 +6,10 @@
 @section('body.content')
 <div class="card">
     <div class="card-header">
-        <a href="{{ route('questions.form') }}" class="btn btn-info" data-toggle="modal"
-            data-target="#modal-lg-add">Add</a>
+        <a href="#" class="btn btn-info" data-toggle="modal"
+            data-target="#modal-lg-add">Thêm</a>
+        <a href="#" class="btn btn-default" data-toggle="modal" data-target="#modal-lg-add-random">Thêm Random</a>
+        @include('exams.modal.form_add_random',['data' => $data['examStructures']])
         @include('exams.modal.form_add',['data' => $data['questions']])
     </div>
     <!-- /.card-header -->
