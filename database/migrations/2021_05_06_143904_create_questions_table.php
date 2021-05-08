@@ -16,6 +16,7 @@ class CreateQuestionsTable extends Migration
         Schema::create('questions', function (Blueprint $table) {
             $table->id('question_id');
             $table->string('question_code')->comment('mã câu hỏi');
+            $table->string('question_level')->comment('mức độ câu hỏi: dễ, trung bình, khó');
             $table->string('question_name')->comment('tên câu hỏi');
             $table->enum('question_type', ['radio', 'checkbox', 'textarea'])->comment('loại câu hỏi: radio, checkbox, textarea');
             $table->double('question_scores')->comment('điểm của 1 câu hỏi')->nullable();
