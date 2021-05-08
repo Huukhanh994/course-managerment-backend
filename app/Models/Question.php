@@ -30,32 +30,26 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Question extends Model
 {
-	protected $table = 'questions';
-	protected $primaryKey = 'question_id';
+    use HasFactory;
 
-	protected $casts = [
-		'question_scores' => 'float',
-		'question_end_time' => 'float',
-		'chapter_id' => 'int'
-	];
+    protected $table = 'questions';
 
-	protected $fillable = [
-		'question_code',
-		'question_name',
-		'question_type',
-		'question_scores',
-		'question_end_time',
-		'chapter_id'
-	];
+    protected $primaryKey = 'question_id';
 
-	public function chapter()
-	{
-		return $this->belongsTo(Chapter::class);
-	}
+    protected $fillable = ['question_code', 'question_level', 'question_name', 'question_type', 'question_scores', 'question_end_time', 'chapter_id'];
 
-	public function exams()
-	{
-		return $this->belongsToMany(Exam::class, 'exam_questions')
-					->withTimestamps();
-	}
+    public function chapter()
+    {
+        return $this->belongsTo(Chapter::class, 'chapter_id');
+    }
+
+    public function answers()
+    {
+        return $this->hasMany(Answer::class, 'question_id');
+    }
+
+    public function exams()
+    {
+        return $this->belongsToMany(Exam::class, 'exam_questions', 'question_id', 'exam_id');
+    }
 }

@@ -1,83 +1,171 @@
 @extends('layouts.app')
-
-@section('title')
-Môn học
-@endsection
+@push('body.head')
+<!-- DataTables -->
+<link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+@endpush
 @section('body.content')
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
-    Thêm
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <form action="{{route('subjects.store')}}" method="post">
-                @csrf
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Thêm môn học</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <span>Tên môn học</span>
-                    <input type="text" class="form-control">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
-                    <button type="button" class="btn btn-primary">Lưu</button>
-                </div>
-            </form>
-        </div>
+<div class="card">
+    <div class="card-header">
+        <a href="{{ route('questions.form') }}" class="btn btn-info" data-toggle="modal"
+            data-target="#modal-lg-add">Add</a>
+        @include('exams.modal.form_add',['data' => $data['questions']])
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <table id="example1" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>ID đề thi</th>
+                    <th>Mã đề</th>
+                    <th>Tên đề</th>
+                    <th>Loại đề</th>
+                    <th>Thời gian kết thúc</th>
+                    <th>Câu hỏi</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($exams as $item)
+                <tr>
+                    <td>{{ $item['exam_id'] }}</td>
+                    <td>{{ $item['exam_code'] }}</td>
+                    <td>{{ $item['exam_name'] }}</td>
+                    <td>{{ $item['exam_type'] }}</td>
+                    <td>{{ $item['exam_end_time'] }}</td>
+                    <td>
+                        <ul>
+                            @foreach ($item->questions as $ques)
+                                <li>{{ $ques['question_name'] }}</li>
+                            @endforeach
+                        </ul>
+                    </td>
+                    <td>
+                        <a href="{{ route('exam_structures.show',$item['exam_id']) }}" class="btn btn-success">Xem cấu trúc đề thi</a>
+                        <a href="{{ route('exam_structures.random',$item['exam_id']) }}" class="btn btn-info">Tạo đề thi ngẫu nhiên</a>
+                          <a href="{{route('exam_structures.downloadPdf',$item['exam_id'])}}" class="btn btn-dark">PDF</a>
+                        <a href="#" class="btn btn-warning"
+                            data-toggle="modal" data-target="#modal-lg-edit">Edit</a>
+                        <button type="button" class="btn btn-danger btn-delete" data-id="{{ $item['exam_id'] }}">
+                            Delete
+                        </button>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
 </div>
-
-
-<table class="table table-hover" id="table">
-    <thead>
-        <tr>
-            <th scope="col">#</th>
-            <th scope="col">Tên môn</th>
-            <th scope="col">Chương</th>
-            <th scope="col">Tuỳ chọn</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-        </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td colspan="2">Larry the Bird</td>
-            <td>@twitter</td>
-        </tr>
-    </tbody>
-</table>
-
-
 @endsection
+
 @push('body.scripts')
+<!-- DataTables  & Plugins -->
+<script src="{{ asset('plugins/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+<script src="{{ asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('plugins/jszip/jszip.min.js') }}"></script>
+<script src="{{ asset('plugins/pdfmake/pdfmake.min.js') }}"></script>
+<script src="{{ asset('plugins/pdfmake/vfs_fonts.js') }}"></script>
+<script src="{{ asset('plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
+<script src="{{ asset('plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
+<script src="{{ asset('plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+<!-- AdminLTE App -->
+<script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{{ asset('dist/js/demo.js') }}"></script>
+<!-- Page specific script -->
 <script>
-    $(document).ready( function () {
-        $('#table').DataTable({
-            
-            "language": {
-                "url": "//cdn.datatables.net/plug-ins/1.10.18/i18n/Vietnamese.json"
-            },
-            "order": [[ 0, "asc" ]]
+    $(function () {
+        $("#example1").DataTable({
+          "responsive": true, "lengthChange": false, "autoWidth": false,
+          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        $('#example2').DataTable({
+          "paging": true,
+          "lengthChange": false,
+          "searching": false,
+          "ordering": true,
+          "info": true,
+          "autoWidth": false,
+          "responsive": true,
         });
-} );
+      });
+</script>
+<!-- Page specific script -->
+<script>
+    $(function () {
+      $.validator.setDefaults({
+        submitHandler: function () {
+          alert( "Form successful submitted!" );
+        }
+      });
+      $('#quickForm').validate({
+        rules: {
+          email: {
+            required: true,
+            email: true,
+          },
+          password: {
+            required: true,
+            minlength: 5
+          },
+          terms: {
+            required: true
+          },
+        },
+        messages: {
+          email: {
+            required: "Please enter a email address",
+            email: "Please enter a vaild email address"
+          },
+          password: {
+            required: "Please provide a password",
+            minlength: "Your password must be at least 5 characters long"
+          },
+          terms: "Please accept our terms"
+        },
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+          error.addClass('invalid-feedback');
+          element.closest('.form-group').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+          $(element).addClass('is-invalid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+          $(element).removeClass('is-invalid');
+        }
+      });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $(".btn-delete").click(function() {
+          var examId = $(this).data('id');
+          Swal.fire({
+          title: 'Do you want dele?',
+          showDenyButton: true,
+          showCancelButton: true,
+          confirmButtonText: `Yes`,
+          denyButtonText: `No`,
+          }).then((result) => {
+            $.ajax({
+                type: "GET",
+                url: "exams/delete/"+examId,
+                success: function (response) {
+                  /* Read more about isConfirmed, isDenied below */
+                  if (response.success) {
+                  Swal.fire('Saved!', '', 'success')
+                  } else if (response.error) {
+                  Swal.fire('Changes are not saved', '', 'info')
+                  }
+                }
+              });
+          })
+        })
+      });
 </script>
 @endpush
