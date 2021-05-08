@@ -7,7 +7,7 @@
     <div class="card">
         <div class="card-header">
             <a href="{{ route('questions.form') }}" class="btn btn-info" data-toggle="modal"
-                data-target="#modal-lg-add">Add</a>
+                data-target="#modal-lg-add">Thêm</a>
                 @include('questions.modal.form_add')
         </div>
         <!-- /.card-header -->
@@ -19,9 +19,8 @@
                         <th>Mã câu hỏi</th>
                         <th>Tên câu hỏi</th>
                         <th>Mức câu hỏi</th>
-                        <th>Loại câu hỏi</th>
                         <th>Thuộc chương</th>
-                        <th>Action</th>
+                        <th>Tuỳ chọn</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,13 +30,12 @@
                             <td>{{ $item['question_code'] }}</td>
                             <td>{{ $item['question_name'] }}</td>
                             <td>{{ $item['question_level'] }}</td>
-                            <td>{{ $item['question_type'] }}</td>
                             <td>{{ $item->chapter->chapter_name }}</td>
                             <td>
-                                <a href="{{ route('questions.answers.add',$item['question_id']) }}" class="btn btn-success">Add answer</a>
-                                <a href="{{ route('questions.form',$item['question_id']) }}" class="btn btn-warning" data-toggle="modal" data-target="#modal-lg-edit{{$item['question_id']}}">Edit</a>
+                                <a href="{{ route('questions.answers.add',$item['question_id']) }}" class="btn btn-success">Thêm đáp án</a>
+                                <a href="{{ route('questions.form',$item['question_id']) }}" class="btn btn-warning" data-toggle="modal" data-target="#modal-lg-edit{{$item['question_id']}}">Sửa</a>
                                 <button type="button" class="btn btn-danger btn-delete" data-id="{{ $item['question_id'] }}">
-                                    Delete
+                                    Xoá
                                 </button>
                             </td>
                         </tr>
@@ -72,7 +70,11 @@
         $(function () {
         $("#example1").DataTable({
           "responsive": true, "lengthChange": false, "autoWidth": false,
-          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+          "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.18/i18n/Vietnamese.json"
+            },
+            "order": [[ 0, "asc" ]]
         }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
         $('#example2').DataTable({
           "paging": true,
@@ -82,6 +84,10 @@
           "info": true,
           "autoWidth": false,
           "responsive": true,
+          "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.18/i18n/Vietnamese.json"
+            },
+            "order": [[ 0, "asc" ]]
         });
       });
     </script>
@@ -135,6 +141,25 @@
 
     <script>
       $(document).ready(function () {
+        $(".select-subject").change(function (e) { 
+          e.preventDefault();
+          let id= $(this).val();
+          $.ajax({
+            type: "GET",
+            url: "chapters/"+id+"/get-chapter",
+            success: function (response) {
+              let option=""
+              $.each(response, function (indexInArray, valueOfElement) { 
+                console.log(valueOfElement);
+                
+                option+="<option value="+valueOfElement.chapter_id+">"+valueOfElement.chapter_name+"</option>"
+
+              });
+              $(".select-chapter").html(option);
+                }
+              });
+        });
+
         $(".btn-delete").click(function() {
           var quesId = $(this).data('id');
           Swal.fire({

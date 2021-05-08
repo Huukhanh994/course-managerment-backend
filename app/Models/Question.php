@@ -17,7 +17,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  * @property int $question_id
  * @property string $question_code
  * @property string $question_name
- * @property string $question_type
  * @property float $question_scores
  * @property float $question_end_time
  * @property int $chapter_id
@@ -37,7 +36,7 @@ class Question extends Model
 
     protected $primaryKey = 'question_id';
 
-    protected $fillable = ['question_code', 'question_level', 'question_name', 'question_type', 'question_scores', 'question_end_time', 'chapter_id'];
+    protected $fillable = ['question_code', 'question_level', 'question_name', 'question_scores', 'question_end_time', 'chapter_id'];
 
     public function chapter()
     {

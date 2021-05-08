@@ -83,4 +83,9 @@ class ChapterController extends Controller
         $chapter->delete();
         return back();
     }
+
+    public function getChapter(Subject $subject)
+    {
+        return response()->json($subject->chapters()->get(), 200);
+    }
 }

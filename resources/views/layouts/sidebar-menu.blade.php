@@ -3,7 +3,7 @@
         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
         <li class="nav-item menu-open">
-            <a href="#" class="nav-link active">
+            <a href="#" class="nav-link ">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
                     Quản lý câu hỏi
@@ -12,7 +12,7 @@
             </a>
             <ul class="nav nav-treeview">
                 <li class="nav-item">
-                    <a href="{{route('questions.index')}}" class="nav-link active">
+                    <a href="{{route('questions.index')}}" class="nav-link ">
                         <i class="far fa-circle nav-icon"></i>
                         <p>Quản lý câu hỏi</p>
                     </a>
@@ -26,7 +26,7 @@
             </ul>
         </li>
         <li class="nav-item menu-open">
-            <a href="{{ route('exams.index') }}" class="nav-link active">
+            <a href="{{ route('exams.index') }}" class="nav-link ">
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>
                     Quản lý đề thi

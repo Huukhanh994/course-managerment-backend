@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Chapter;
 use App\Models\Question;
+use App\Models\Subject;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Query\Builder as QueryBuilder;
@@ -29,7 +30,7 @@ class QuestionRepository extends BaseRepository
 
     public function prepareData()
     {
-        $data['chapters'] = Chapter::all();
+        $data['subjects'] = Subject::all();
 
         return $data;
     }

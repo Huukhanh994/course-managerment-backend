@@ -16,7 +16,7 @@ class ExamStructureController extends Controller
      */
     public function index()
     {
-        return view('exam_structures.index');
+        return view('exam_structure.show');
     }
 
     /**

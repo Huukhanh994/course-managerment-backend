@@ -37,6 +37,7 @@ Route::prefix('chapters')->name('chapters.')->group(function () {
     Route::post('/store', [ChapterController::class, 'store'])->name('store');
     Route::post('/update', [ChapterController::class, 'update'])->name('update');
     Route::post('/{chapter}/delete', [ChapterController::class, 'delete'])->name('delete');
+    Route::get('/{subject}/get-chapter',[ChapterController::class, 'getChapter'])->name('getChapter');
 });
 Route::prefix('questions')->name('questions.')->group(function () {
     Route::get('/', [QuestionsController::class, 'index'])->name('index');

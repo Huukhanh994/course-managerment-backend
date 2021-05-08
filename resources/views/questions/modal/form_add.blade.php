@@ -7,10 +7,9 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <form id="quickForm" method="POST"
-                    action="{{ route('questions.store') }}">
-                    @csrf
+            <form id="quickForm" method="POST" action="{{ route('questions.store') }}">
+                @csrf
+                <div class="modal-body">
                     <div class="card-body">
                         <div class="form-group">
                             <label for="exampleInputEmail1">Mã câu hỏi</label>
@@ -23,32 +22,37 @@
                                 placeholder="Tên câu hỏi">
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputPassword1">Loai câu hỏi</label>
-                            <input type="text" name="question_type" class="form-control" id="exampleInputPassword1" placeholder="Loai câu hỏi">
+                            <label for="exampleInputPassword1">Mức độ câu hỏi</label>
+                            <select name="question_level" id="" class="form-control">
+                                <option value="1">Dễ</option>
+                                <option value="2">Trung bình</option>
+                                <option value="3">Khó</option>
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputPassword1">Mức câu hỏi</label>
-                            <input type="text" name="question_level" class="form-control" id="exampleInputPassword1" placeholder="Mức độ câu hỏi">
-                        </div>
-                        <div class="form-group">
-                            <label for="exampleInputPassword1">Thuộc chương</label>
-                            <select class="form-control" name="chapter_id">
-                                @foreach ($data['chapters'] as $item)
-                                    <option value="{{$item['chapter_id']}}">{{ $item['chapter_name'] }}</option>
+                            <label for="exampleInputPassword1">Thuộc môn</label>
+                            <select class="form-control select-subject" name="subject_id">
+                                <option value="">--Chọn Môn--</option>
+                                @foreach ($data['subjects'] as $item)
+                                <option value="{{$item['subject_id']}}">{{ $item['subject_name'] }}</option>
                                 @endforeach
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label for="exampleInputPassword1">Thuộc chương</label>
+                            <select class="form-control select-chapter" name="chapter_id">
+                                <option value="">--Chọn Chương--</option>
+                                
+                                
+                            </select>
+                        </div>
                     </div>
-                    <!-- /.card-body -->
-                    <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Huỷ</button>
+                    <button type="submit" class="btn btn-primary">Lưu</button>
+                </div>
+            </form>
         </div>
         <!-- /.modal-content -->
     </div>
