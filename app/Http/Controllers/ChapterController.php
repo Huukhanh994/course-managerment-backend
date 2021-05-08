@@ -69,19 +69,18 @@ class ChapterController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        Chapter::where('chapter_id',$request->id)->update([
+            'chapter_name'=>$request->value
+        ]);
+        return response()->json('success', 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+ 
+    public function delete(Chapter $chapter)
     {
-        //
+        $chapter->delete();
+        return back();
     }
 }

@@ -9,9 +9,6 @@ use App\Http\Controllers\QuestionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExamsController;
 use App\Http\Controllers\QuestionsController;
-use App\Http\Controllers\SubjectController;
-use App\Http\Controllers\ChapterController;
-use App\Http\Controllers\ExamStructureController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,9 +20,8 @@ use App\Http\Controllers\ExamStructureController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [SubjectController::class, 'index'])->name('index');
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -34,11 +30,13 @@ Route::get('/dashboard', function () {
 Route::prefix('subjects')->name('subjects.')->group(function () {
     Route::get('/', [SubjectController::class, 'index'])->name('index');
     Route::post('/store', [SubjectController::class, 'store'])->name('store');
+    Route::post('/update', [SubjectController::class, 'update'])->name('update');
     Route::post('/{subject}/delete', [SubjectController::class, 'delete'])->name('delete');
 });
 Route::prefix('chapters')->name('chapters.')->group(function () {
     Route::post('/store', [ChapterController::class, 'store'])->name('store');
-    Route::delete('/{chapter}/delete', [ChapterController::class, 'delete'])->name('delete');
+    Route::post('/update', [ChapterController::class, 'update'])->name('update');
+    Route::post('/{chapter}/delete', [ChapterController::class, 'delete'])->name('delete');
 });
 Route::prefix('questions')->name('questions.')->group(function () {
     Route::get('/', [QuestionsController::class, 'index'])->name('index');

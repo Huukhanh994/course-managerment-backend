@@ -63,15 +63,17 @@ class SubjectController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        Subject::where('subject_id',$request->id)->update([
+            'subject_name'=>$request->value
+        ]);
+        return response()->json('success', 200);
     }
 
  
     public function delete(Subject $subject)
     {
-        dd($subject);
         $subject->chapters()->delete();
         $subject->delete();
         return back();
