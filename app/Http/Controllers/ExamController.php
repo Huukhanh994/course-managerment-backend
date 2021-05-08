@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Exam;
-use App\Models\Question;
 use Illuminate\Http\Request;
-use PDF;
 
-class ExamStructureController extends Controller
+class ExamController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +13,7 @@ class ExamStructureController extends Controller
      */
     public function index()
     {
-        return view('exam_structures.index');
+        return view('exams.index');
     }
 
     /**
@@ -37,26 +34,7 @@ class ExamStructureController extends Controller
      */
     public function store(Request $request)
     {
-        $phpWord = new \PhpOffice\PhpWord\PhpWord();
-
-
-        $section = $phpWord->addSection();
-
-        $description = $request->get('answer_content');
-
-
-        $section->addImage("http://itsolutionstuff.com/frontTheme/images/logo.png");
-        $section->addText(array($description));
-
-
-        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
-        try {
-            $objWriter->save(storage_path('helloWorld.docx'));
-        } catch (Exception $e) {
-        }
-
-
-        return response()->download(storage_path('helloWorld.docx'));
+        //
     }
 
     /**
@@ -67,8 +45,7 @@ class ExamStructureController extends Controller
      */
     public function show($id)
     {
-        $exam = Exam::with('questions')->whereExamId($id)->first();
-        return view('exam_structure.show', compact('exam'));
+        //
     }
 
     /**
@@ -103,20 +80,5 @@ class ExamStructureController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function randomExam(Exam $exam)
-    {
-        $randomQuestions = Question::with('answers')->inRandomOrder()->limit(2)->get();
-
-        return view('exam_structure.show', compact('randomQuestions', 'exam'));
-    }
-
-    public function downloadPdf(Exam $exam)
-    {
-        $randomQuestions = Question::with('answers')->inRandomOrder()->limit(2)->get();
-
-        $pdf = PDF::loadView('exam_structure.show', compact('randomQuestions', 'exam'));
-        return $pdf->download('pdfview.pdf');
     }
 }

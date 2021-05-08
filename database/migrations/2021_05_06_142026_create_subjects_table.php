@@ -15,7 +15,7 @@ class CreateSubjectsTable extends Migration
     {
         Schema::create('subjects', function (Blueprint $table) {
             $table->id('subject_id');
-            $table->string('subject_code')->comment('mã môn học');
+            $table->string('subject_code')->nullable()->comment('mã môn học');
             $table->string('subject_name')->comment('tên môn học');
             $table->timestamps();
         });

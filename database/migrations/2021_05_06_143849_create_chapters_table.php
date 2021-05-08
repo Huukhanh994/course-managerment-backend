@@ -15,7 +15,7 @@ class CreateChaptersTable extends Migration
     {
         Schema::create('chapters', function (Blueprint $table) {
             $table->id('chapter_id');
-            $table->string('chapter_code')->comment('mã chương');
+            $table->string('chapter_code')->nullable()->comment('mã chương');
             $table->string('chapter_name')->comment('tên chương');
             $table->unsignedBigInteger('subject_id');
             $table->foreign('subject_id')->references('subject_id')->on('subjects')->onDelete('cascade');

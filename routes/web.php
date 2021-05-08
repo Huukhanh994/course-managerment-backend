@@ -1,6 +1,11 @@
 <?php
 
 use App\Http\Controllers\AnswersController;
+use App\Http\Controllers\SubjectController;
+use App\Http\Controllers\ChapterController;
+use App\Http\Controllers\ExamController;
+use App\Http\Controllers\ExamStructureController;
+use App\Http\Controllers\QuestionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExamsController;
 use App\Http\Controllers\QuestionsController;

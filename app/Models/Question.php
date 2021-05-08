@@ -1,10 +1,33 @@
 <?php
 
+/**
+ * Created by Reliese Model.
+ */
+
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Question
+ * 
+ * @property int $question_id
+ * @property string $question_code
+ * @property string $question_name
+ * @property string $question_type
+ * @property float $question_scores
+ * @property float $question_end_time
+ * @property int $chapter_id
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ * 
+ * @property Chapter $chapter
+ * @property Collection|Exam[] $exams
+ *
+ * @package App\Models
+ */
 class Question extends Model
 {
     use HasFactory;
