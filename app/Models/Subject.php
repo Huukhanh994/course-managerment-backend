@@ -35,6 +35,6 @@ class Subject extends Model
 
 	public function chapters()
 	{
-		return $this->hasMany(Chapter::class,'subject_id');
+		return $this->hasMany(Chapter::class, 'subject_id');
 	}
 }
