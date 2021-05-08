@@ -31,6 +31,7 @@ class QuestionRepository extends BaseRepository
     public function prepareData()
     {
         $data['subjects'] = Subject::all();
+        $data['chapters'] = Chapter::all();
 
         return $data;
     }

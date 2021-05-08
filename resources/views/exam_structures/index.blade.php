@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-Môn học
+Cơ cấu đề thi
 @endsection
 @section('body.content')
 <!-- Button trigger modal -->
@@ -14,21 +14,45 @@ Môn học
     aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <form action="{{route('subjects.store')}}" method="post">
+            <form action="{{route('exam_structures.storeExamStructure')}}" method="post">
                 @csrf
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLongTitle">Thêm môn học</h5>
+                    <h5 class="modal-title" id="exampleModalLongTitle">Thêm cơ cấu đề thi</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <span>Tên môn học</span>
-                    <input type="text" class="form-control">
+                    <span>Tên cấu trúc đề thi</span>
+                    <input type="text" name="exam_structure_name" class="form-control">
+                </div>
+                <div class="modal-body">
+                    <span>Số lượng câu hỏi</span>
+                    <input type="text" name="exam_structure_quantity" class="form-control">
+                </div>
+                <div class="modal-body">
+                    <span>Số lượng câu hỏi dễ</span>
+                    <input type="text" name="exam_structure_ez" class="form-control">
+                </div>
+                <div class="modal-body">
+                    <span>Số lượng câu hỏi trung bình</span>
+                    <input type="text" name="exam_structure_me" class="form-control">
+                </div>
+                <div class="modal-body">
+                    <span>Số lượng câu hỏi khó</span>
+                    <input type="text" name="exam_structure_ha" class="form-control">
+                </div>
+                <div class="modal-body">
+                    <span>Thuộc chương</span>
+                    <select name="chapter_id" id="">
+                        @foreach ($data as $item)
+                            <option value="{{$item['chapter_id']}}">{{$item['chapter_code']}}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
-                    <button type="button" class="btn btn-primary">Lưu</button>
+                    <button type="submit" class="btn btn-primary">Lưu</button>
                 </div>
             </form>
         </div>
@@ -40,8 +64,8 @@ Môn học
     <thead>
         <tr>
             <th scope="col">#</th>
-            <th scope="col">Tên môn</th>
-            <th scope="col">Chương</th>
+            <th scope="col">Thuộc chương</th>
+            <th scope="col">Số lượng tối đa</th>
             <th scope="col">Số câu dễ</th>
             <th scope="col">Số câu trung bình</th>
             <th scope="col">Số câu khó</th>
@@ -49,22 +73,25 @@ Môn học
         </tr>
     </thead>
     <tbody>
-        <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>Otto</td>
-            <td>Otto</td>
-            <td>Otto</td>
-            <td>
-                <a href="" class="select-action-pratice-test" target="_blank" data-practest-id="" idAction=1>
-                    <i class="fas fa-edit"></i>
-                </a>&nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="#" style="color:red;" class="remove" idAction=2 data-practest-id="">
-                    <i class="far fa-trash-alt"></i>
-                </a>
-            </td>
-        </tr>
+        @foreach ($examStructures as $item)
+            <tr>
+                <th scope="row">{{$item['exam_structure_id']}}</th>
+                <td>{{$item->chapter->chapter_name}}</td>
+                <td>{{$item['exam_structure_quantity']}}</td>
+                <td>{{$item['exam_structure_ez']}}</td>
+                <td>{{$item['exam_structure_me']}}</td>
+                <td>{{$item['exam_structure_ha']}}</td>
+                <td>
+                    <a href="#" class="select-action-pratice-test" data-toggle="modal" data-target=".modal-lg-edit{{$item['exam_structure_id']}}">
+                        <i class="fas fa-edit"></i>
+                    </a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="#" style="color:red;" class="remove" idAction=2 data-practest-id="">
+                        <i class="far fa-trash-alt"></i>
+                    </a>
+                </td>
+                @include('exam_structures.modal.form_edit',['examStructures' => $examStructures,'data' => $data])
+            </tr>
+        @endforeach
     </tbody>
 </table>
 

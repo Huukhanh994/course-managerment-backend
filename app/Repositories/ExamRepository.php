@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Chapter;
 use App\Models\Exam;
+use App\Models\ExamStructure;
 use App\Models\Question;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
@@ -31,6 +32,7 @@ class ExamRepository extends BaseRepository
     public function prepareData()
     {
         $data['questions'] = Question::all();
+        $data['examStructures'] = ExamStructure::all();
 
         return $data;
     }
