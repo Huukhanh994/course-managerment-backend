@@ -37,7 +37,7 @@ Route::prefix('chapters')->name('chapters.')->group(function () {
     Route::post('/store', [ChapterController::class, 'store'])->name('store');
     Route::post('/update', [ChapterController::class, 'update'])->name('update');
     Route::post('/{chapter}/delete', [ChapterController::class, 'delete'])->name('delete');
-    Route::get('/{subject}/get-chapter',[ChapterController::class, 'getChapter'])->name('getChapter');
+    Route::get('/{subject}/get-chapter', [ChapterController::class, 'getChapter'])->name('getChapter');
 });
 Route::prefix('questions')->name('questions.')->group(function () {
     Route::get('/', [QuestionsController::class, 'index'])->name('index');
@@ -64,5 +64,9 @@ Route::prefix('exam-structures')->name('exam_structures.')->group(function () {
 
 Route::prefix('answers')->name('answers.')->group(function () {
     Route::get('/', [AnswersController::class, 'index'])->name('index');
+    Route::post('/{answer}/update', [AnswersController::class, 'update'])->name('update');
+    Route::get('/delete/{answerId}', [AnswersController::class, 'delete'])->name('delete');
+    Route::get('/changeCorrect/{answerId}', [AnswersController::class, 'changeCorrect'])->name('changeCorrect');
+    Route::get('/changeActive/{answerId}', [AnswersController::class, 'changeActive'])->name('changeActive');
 });
 require __DIR__ . '/auth.php';
