@@ -76,6 +76,30 @@
 @push('body.scripts')
     <script>
         $(document).ready(function () {
+            $(".fa-edit").click(function() {
+                var answerId = $(this).data('id');
+                Swal.fire({
+                title: 'Are you sure want to delete this item?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                $.ajax({
+                type: "GET",
+                url: "answers/delete/"+answerId,
+                success: function (response) {
+                Swal.fire(
+                'Success!',
+                `${response.success}`,
+                'success'
+                );
+                location.reload();
+                }
+                });
+                })
+            })
             $('#add-item').on('click', function(){
                 var totalElement = $('.answer-div').length;
                 var max = 4;

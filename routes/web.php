@@ -1,10 +1,7 @@
 <?php
 
 use App\Http\Controllers\AnswersController;
-use App\Http\Controllers\SubjectController;
-use App\Http\Controllers\ChapterController;
 use App\Http\Controllers\ExamController;
-use App\Http\Controllers\ExamStructureController;
 use App\Http\Controllers\QuestionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ExamsController;
@@ -65,5 +62,9 @@ Route::prefix('exam-structures')->name('exam_structures.')->group(function () {
 
 Route::prefix('answers')->name('answers.')->group(function () {
     Route::get('/', [AnswersController::class, 'index'])->name('index');
+    Route::post('/{answer}/update', [AnswersController::class, 'update'])->name('update');
+    Route::get('/delete/{answerId}', [AnswersController::class, 'delete'])->name('delete');
+    Route::get('/changeCorrect/{answerId}', [AnswersController::class, 'changeCorrect'])->name('changeCorrect');
+    Route::get('/changeActive/{answerId}', [AnswersController::class, 'changeActive'])->name('changeActive');
 });
 require __DIR__ . '/auth.php';
