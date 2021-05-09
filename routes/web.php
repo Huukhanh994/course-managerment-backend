@@ -49,7 +49,8 @@ Route::prefix('questions')->name('questions.')->group(function () {
 Route::prefix('exams')->name('exams.')->group(function () {
     Route::get('/', [ExamsController::class, 'index'])->name('index');
     Route::post('/store', [ExamsController::class, 'store'])->name('store');
-    Route::get('/delete/{exam}', [ExamsController::class, 'delete'])->name('delete');
+    Route::post('/{exam}/update', [ExamsController::class, 'update'])->name('update');
+    Route::get('/delete/{examId}', [ExamsController::class, 'delete'])->name('delete');
     Route::post('/storeRandom', [ExamsController::class, 'storeRandom'])->name('storeRandom');
 });
 Route::prefix('exam-structures')->name('exam_structures.')->group(function () {
@@ -59,7 +60,7 @@ Route::prefix('exam-structures')->name('exam_structures.')->group(function () {
     Route::get('{exam}/show', [ExamStructureController::class, 'show'])->name('show');
     Route::get('{exam}/random', [ExamStructureController::class, 'randomExam'])->name('random');
     Route::get('{exam}/downloadPdf', [ExamStructureController::class, 'downloadPdf'])->name('downloadPdf');
-    Route::delete('/{exam_structure}/delete', [ExamStructureController::class, 'delete'])->name('delete');
+    Route::get('/delete/{examStructureId}', [ExamStructureController::class, 'delete'])->name('delete');
     Route::post('/{id}/update', [ExamStructureController::class, 'update'])->name('update');
 });
 

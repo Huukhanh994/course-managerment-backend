@@ -136,9 +136,15 @@ class ExamStructureController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete(Request $request)
     {
-        //
+        $delete = ExamStructure::whereExamStructureId($request->examStructureId)->delete();
+
+        if ($delete) {
+            return response()->json(['success' => 'Xóa thành công']);
+        } else {
+            return response()->json(['error' => 'Xóa thất bại']);
+        }
     }
 
     public function randomExam(Exam $exam)

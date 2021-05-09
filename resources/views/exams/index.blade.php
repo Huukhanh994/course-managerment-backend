@@ -35,22 +35,23 @@
                     <td>{{ $item['exam_type'] }}</td>
                     <td>{{ $item['exam_end_time'] }}</td>
                     <td>
-                        <ul>
-                            @foreach ($item->questions as $ques)
-                                <li>{{ $ques['question_name'] }}</li>
+                        <ol>
+                            @foreach ($item->questions as $key => $ques)
+                                <li><b>{{$key+1}}/</b>  {{ $ques['question_name'] }}</li>
                             @endforeach
-                        </ul>
+                        </ol>
                     </td>
                     <td>
                         <a href="{{ route('exam_structures.show',$item['exam_id']) }}" class="btn btn-success">Xem cấu trúc đề thi</a>
                         <a href="{{ route('exam_structures.random',$item['exam_id']) }}" class="btn btn-info">Tạo đề thi ngẫu nhiên</a>
                           <a href="{{route('exam_structures.downloadPdf',$item['exam_id'])}}" class="btn btn-dark">PDF</a>
                         <a href="#" class="btn btn-warning"
-                            data-toggle="modal" data-target="#modal-lg-edit">Edit</a>
+                            data-toggle="modal" data-target="#modal-lg-edit{{$item['exam_id']}}">Edit</a>
                         <button type="button" class="btn btn-danger btn-delete" data-id="{{ $item['exam_id'] }}">
                             Delete
                         </button>
                     </td>
+                    @include('exams.modal.form_edit',['exams' => $exams,'examStructures' => $examStructures])
                 </tr>
                 @endforeach
             </tbody>
@@ -158,24 +159,38 @@
         $(".btn-delete").click(function() {
           var examId = $(this).data('id');
           Swal.fire({
-          title: 'Do you want dele?',
-          showDenyButton: true,
-          showCancelButton: true,
-          confirmButtonText: `Yes`,
-          denyButtonText: `No`,
-          }).then((result) => {
-            $.ajax({
-                type: "GET",
-                url: "exams/delete/"+examId,
-                success: function (response) {
-                  /* Read more about isConfirmed, isDenied below */
-                  if (response.success) {
-                  Swal.fire('Saved!', '', 'success')
-                  } else if (response.error) {
-                  Swal.fire('Changes are not saved', '', 'info')
-                  }
-                }
-              });
+          title: "Delete?",
+          text: "Please ensure and then confirm!",
+          type: "warning",
+          showCancelButton: !0,
+          confirmButtonText: "Yes, delete it!",
+          cancelButtonText: "No, cancel!",
+          reverseButtons: !0
+          }).then(function (e) {
+          
+          if (e.value === true) {
+          var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+          
+          $.ajax({
+          type: 'GET',
+          url: "exams/delete/"+examId,
+          data: {_token: CSRF_TOKEN},
+          dataType: 'JSON',
+          success: function (response) {
+          
+          if (response.success === true) {
+            Swal.fire('Saved!', response.success, 'success')
+          }
+          location.reload();
+          }
+          });
+          
+          } else {
+          e.dismiss;
+          }
+          
+          }, function (dismiss) {
+          return false;
           })
         })
       });

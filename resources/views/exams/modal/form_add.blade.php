@@ -24,14 +24,21 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">Loai đề</label>
-                            <input type="text" name="exam_type" class="form-control" id="exampleInputPassword1" placeholder="Loai đề">
+                            <select name="exam_type" id="" class="form-control">
+                                <option value="Dễ">Dễ</option>
+                                <option value="Trung Bình">Trung Bình</option>
+                                <option value="Khó">Khó</option>
+                            </select>
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">Thời gian làm bài</label>
-                            <input type="text" name="exam_end_time" class="form-control" id="exampleInputPassword1" placeholder="Mức độ đề">
+                            <select name="exam_end_time" id="" class="form-control">
+                                <option value="15">15</option>
+                                <option value="45">45</option>
+                            </select>
                         </div>
                         <div class="form-group">
-                            <label for="exampleInputPassword1">Chọn đề</label>
+                            <label for="exampleInputPassword1">Chọn nhiều câu hỏi</label>
                             <select multiple="" class="form-control" name="question_id[]">
                                 @foreach ($data as $item)
                                     <option value="{{$item['question_id']}}">{{ $item['question_name'] }}</option>
