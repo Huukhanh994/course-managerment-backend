@@ -16,7 +16,7 @@
                             <div class="card-header">
                                 <h3 class="card-title">
                                     <i class="fas fa-text-width"></i>
-                                    Cấu trúc đề thi
+                                    Cấu trúc đề thiád
                                 </h3>
                             </div>
                             <!-- /.card-header -->
@@ -34,13 +34,13 @@
                                             <div class="col-3">
                                                 @if ($item['answer_correct'] == 1)
                                                 <input type="text" class="form-control is-valid" id="inputSuccess"
-                                                    name="answer_content[]" value="{{$item['answer_content']}}">
+                                                    name="answer_content[{{$questionEz['question_name']}}][]" value="{{$item['answer_content']}}">
                                                 @else
-                                                <input type="text" class="form-control" name="answer_content[]"
+                                                <input type="text" class="form-control" name="answer_content[{{$questionEz['question_name']}}][]"
                                                     value="{{$item['answer_content']}}">
                                                 @endif
                                             </div>
-                                            <input type="hidden" name="answers" value="{{$questionEz->answers}}">
+                                            <input type="hidden" name="answers[{{$questionEz['question_name']}}][]" value="{{$item['answer_content']}}">
                                             @endforeach
                                         </div>
                                     </div>
@@ -61,13 +61,13 @@
                                             @foreach ($questionEz->answers as $item)
                                             <div class="col-3">
                                                 @if ($item['answer_correct'] == 1)
-                                                <input type="text" class="form-control is-valid" id="inputSuccess" name="answer_content[]"
+                                                <input type="text" class="form-control is-valid" id="inputSuccess" name="[{{$questionEz['question_name']}}][]"
                                                     value="{{$item['answer_content']}}">
                                                 @else
-                                                <input type="text" class="form-control" name="answer_content[]" value="{{$item['answer_content']}}">
+                                                <input type="text" class="form-control" name="[{{$questionEz['question_name']}}][]" value="{{$item['answer_content']}}">
                                                 @endif
                                             </div>
-                                            <input type="hidden" name="answers" value="{{$questionEz->answers}}">
+                                            <input type="hidden" name="answers[{{$questionEz['question_name']}}][]" value="{{$item->answer_content}}">
                                             @endforeach
                                         </div>
                                     </div>
@@ -88,13 +88,13 @@
                                             @foreach ($questionEz->answers as $item)
                                             <div class="col-3">
                                                 @if ($item['answer_correct'] == 1)
-                                                <input type="text" class="form-control is-valid" id="inputSuccess" name="answer_content[]"
+                                                <input type="text" class="form-control is-valid" id="inputSuccess" name="[{{$questionEz['question_name']}}][]"
                                                     value="{{$item['answer_content']}}">
                                                 @else
-                                                <input type="text" class="form-control" name="answer_content[]" value="{{$item['answer_content']}}">
+                                                <input type="text" class="form-control" name="[{{$questionEz['question_name']}}][]" value="{{$item['answer_content']}}">
                                                 @endif
                                             </div>
-                                            <input type="hidden" name="answers" value="{{$questionEz->answers}}">
+                                            <input type="hidden" name="answers[{{$questionEz['question_name']}}][]" value="{{$item->answer_content}}">
                                             @endforeach
                                         </div>
                                     </div>

@@ -1,80 +1,92 @@
 @extends('layouts.app')
 @push('body.head')
-    <!-- DataTables -->
-    <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+<!-- DataTables -->
+<link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
 @endpush
 @section('body.content')
-    <div class="card">
-        <div class="card-header">
-            <a href="{{ route('questions.form') }}" class="btn btn-info" data-toggle="modal"
-                data-target="#modal-lg-add">Thêm</a>
-                @include('questions.modal.form_add')
-        </div>
-        <!-- /.card-header -->
-        <div class="card-body">
-            <table id="example1" class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th>ID câu hỏi</th>
-                        <th>Mã câu hỏi</th>
-                        <th>Tên câu hỏi</th>
-                        <th>Mức câu hỏi</th>
-                        <th>Thuộc chương</th>
-                        <th>Tuỳ chọn</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($questions as $item)
-                        <tr>
-                            <td>{{ $item['question_id'] }}</td>
-                            <td>{{ $item['question_code'] }}</td>
-                            <td>{{ $item['question_name'] }}</td>
-                            <td>{{ $item['question_level'] }}</td>
-                            <td>{{ $item->chapter->chapter_name }}</td>
-                            <td>
-                                <a href="{{ route('questions.answers.add',$item['question_id']) }}" class="btn btn-success">Thêm đáp án</a>
-                                <a href="{{ route('questions.form',$item['question_id']) }}" class="btn btn-warning" data-toggle="modal" data-target="#modal-lg-edit{{$item['question_id']}}">Sửa</a>
-                                <button type="button" class="btn btn-danger btn-delete" data-id="{{ $item['question_id'] }}">
-                                    Xoá
-                                </button>
-                            </td>
-                        </tr>
-                    @endforeach
-                    @include('questions.modal.form_edit',['questions' => $questions,'data' => $data])
-                </tbody>
-            </table>
-        </div>
-    </div>
+<div class="card">
+  <div class="card-header">
+    <a href="{{ route('questions.form') }}" class="btn btn-info" data-toggle="modal"
+      data-target="#modal-lg-add">Thêm</a>
+    @include('questions.modal.form_add')
+  </div>
+  <!-- /.card-header -->
+  <div class="card-body">
+    <table id="example1" class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>ID câu hỏi</th>
+          <th>Mã câu hỏi</th>
+          <th>Tên câu hỏi</th>
+          <th>Mức câu hỏi</th>
+          <th>Thuộc chương</th>
+          <th>Tuỳ chọn</th>
+        </tr>
+      </thead>
+      <tbody>
+        @foreach ($questions as $item)
+        <tr>
+          <td>{{ $item['question_id'] }}</td>
+          <td>{{ $item['question_code'] }}</td>
+          <td>{{ $item['question_name'] }}</td>
+          <td>@switch( $item['question_level'])
+            @case(1)
+            Dễ
+            @break
+            @case(2)
+            Trung bình
+            @break
+            @case(3)
+            Khó
+            @break
+            @endswitch</td>
+          <td>{{ $item->chapter->chapter_name }}</td>
+          <td>
+            <a href="{{ route('questions.answers.add',$item['question_id']) }}" class="btn btn-success">Thêm đáp án</a>
+            <a href="{{ route('questions.form',$item['question_id']) }}" class="btn btn-warning" data-toggle="modal"
+              data-target="#modal-lg-edit{{$item['question_id']}}">Sửa</a>
+            <button type="button" class="btn btn-danger btn-delete" data-id="{{ $item['question_id'] }}">
+              Xoá
+            </button>
+          </td>
+        </tr>
+        @endforeach
+        @include('questions.modal.form_edit',['questions' => $questions,'data' => $data])
+      </tbody>
+    </table>
+  </div>
+</div>
 @endsection
 
 @push('body.scripts')
-    <!-- DataTables  & Plugins -->
-    <script src="{{ asset('plugins/datatables/jquery.dataTables.min.js') }}"></script>
-    <script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
-    <script src="{{ asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
-    <script src="{{ asset('plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
-    <script src="{{ asset('plugins/jszip/jszip.min.js') }}"></script>
-    <script src="{{ asset('plugins/pdfmake/pdfmake.min.js') }}"></script>
-    <script src="{{ asset('plugins/pdfmake/vfs_fonts.js') }}"></script>
-    <script src="{{ asset('plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
-    <script src="{{ asset('plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
-    <script src="{{ asset('plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
-    <!-- AdminLTE App -->
-    <script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
-    <!-- AdminLTE for demo purposes -->
-    <script src="{{ asset('dist/js/demo.js') }}"></script>
-    <!-- Page specific script -->
-    <script>
-        $(function () {
+<!-- DataTables  & Plugins -->
+<script src="{{ asset('plugins/datatables/jquery.dataTables.min.js') }}"></script>
+<script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+<script src="{{ asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
+<script src="{{ asset('plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
+<script src="{{ asset('plugins/jszip/jszip.min.js') }}"></script>
+<script src="{{ asset('plugins/pdfmake/pdfmake.min.js') }}"></script>
+<script src="{{ asset('plugins/pdfmake/vfs_fonts.js') }}"></script>
+<script src="{{ asset('plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
+<script src="{{ asset('plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
+<script src="{{ asset('plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+<!-- AdminLTE App -->
+<script src="{{ asset('dist/js/adminlte.min.js') }}"></script>
+<!-- AdminLTE for demo purposes -->
+<script src="{{ asset('dist/js/demo.js') }}"></script>
+<!-- Page specific script -->
+<script>
+  $(function () {
         $("#example1").DataTable({
           "responsive": true, "lengthChange": false, "autoWidth": false,
           "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
           "language": {
                 "url": "//cdn.datatables.net/plug-ins/1.10.18/i18n/Vietnamese.json"
             },
-            "order": [[ 0, "asc" ]]
+            "order": [[ 0, "asc" ]],
+            "bPaginate": false,
         }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
         $('#example2').DataTable({
           "paging": true,
@@ -87,13 +99,14 @@
           "language": {
                 "url": "//cdn.datatables.net/plug-ins/1.10.18/i18n/Vietnamese.json"
             },
-            "order": [[ 0, "asc" ]]
+            "order": [[ 0, "asc" ]],
+            "bPaginate": false,
         });
       });
-    </script>
-    <!-- Page specific script -->
-    <script>
-        $(function () {
+</script>
+<!-- Page specific script -->
+<script>
+  $(function () {
       $.validator.setDefaults({
         submitHandler: function () {
           alert( "Form successful submitted!" );
@@ -137,10 +150,10 @@
         }
       });
     });
-    </script>
+</script>
 
-    <script>
-      $(document).ready(function () {
+<script>
+  $(document).ready(function () {
         $(".select-subject").change(function (e) { 
           e.preventDefault();
           let id= $(this).val();
@@ -151,9 +164,7 @@
               let option=""
               $.each(response, function (indexInArray, valueOfElement) { 
                 console.log(valueOfElement);
-                
                 option+="<option value="+valueOfElement.chapter_id+">"+valueOfElement.chapter_name+"</option>"
-
               });
               $(".select-chapter").html(option);
                 }
@@ -184,5 +195,5 @@
           })
         })
       });
-    </script>
+</script>
 @endpush

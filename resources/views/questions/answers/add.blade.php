@@ -8,18 +8,9 @@
             <div class="card-header">
                 <h3 class="card-title">
                     <i class="ion ion-clipboard mr-1"></i>
-                    To Do List
+                    Thêm đáp án
                 </h3>
-        
-                <div class="card-tools">
-                    <ul class="pagination pagination-sm">
-                        <li class="page-item"><a href="#" class="page-link">&laquo;</a></li>
-                        <li class="page-item"><a href="#" class="page-link">1</a></li>
-                        <li class="page-item"><a href="#" class="page-link">2</a></li>
-                        <li class="page-item"><a href="#" class="page-link">3</a></li>
-                        <li class="page-item"><a href="#" class="page-link">&raquo;</a></li>
-                    </ul>
-                </div>
+
             </div>
             <!-- /.card-header -->
             <div class="card-body">
@@ -65,11 +56,10 @@
             </div>
             <!-- /.card-body -->
             <div class="card-footer clearfix">
-                <button type="button" class="btn btn-primary float-right" id="add-item"><i class="fas fa-plus"></i> Add
-                    item</button>
+                <button type="button" class="btn btn-primary float-right" id="add-item"><i class="fas fa-plus"></i> Thêm đáp án</button>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Lưu</button>
     </form>
 @endsection
 

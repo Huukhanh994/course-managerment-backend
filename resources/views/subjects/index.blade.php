@@ -4,11 +4,11 @@
 Môn học
 @endsection
 @push('body.head')
-    <style>
-        .hide{
-            display: none;
-        }
-    </style>
+<style>
+    .hide {
+        display: none;
+    }
+</style>
 @endpush
 @section('body.content')
 <!-- Button subject modal -->
@@ -97,15 +97,16 @@ Môn học
                     {{$subject->subject_name}}
                 </span>
                 <div class="edit{{$subject->subject_id}} hide">
-                    <input type="text" value="{{$subject->subject_name}}" subject-id="{{$subject->subject_id}}" class="inp-subject">
+                    <input type="text" value="{{$subject->subject_name}}" subject-id="{{$subject->subject_id}}"
+                        class="inp-subject">
                 </div>
             </td>
             <td>
                 <form action="{{route('subjects.delete',$subject->subject_id)}}" method="POST">
                     @csrf
 
-                    <a href="" class="edit-subject" subject-id="{{$subject->subject_id}}"
-                        data-toogle="tooltip" title="Chỉnh sửa môn">
+                    <a href="" class="edit-subject" subject-id="{{$subject->subject_id}}" data-toogle="tooltip"
+                        title="Chỉnh sửa môn">
                         <i class="fas fa-edit"></i>
                     </a>&nbsp;&nbsp;&nbsp;&nbsp;
 
@@ -113,6 +114,7 @@ Môn học
                     <button style="color:red;" class="remove bg-transparent border-0" type="submit">
                         <i class="far fa-trash-alt"></i>
                     </button>
+                </form>
             </td>
             <td>
                 @foreach ($subject->chapters as $chapter)
@@ -120,7 +122,8 @@ Môn học
                     {{$chapter->chapter_name}}<br>
                 </span>
                 <div class="edit{{$chapter->chapter_id}} hide">
-                    <input type="text" value="{{$chapter->chapter_name}}" chapter-id="{{$chapter->chapter_id}}" class="inp-chapter">
+                    <input type="text" value="{{$chapter->chapter_name}}" chapter-id="{{$chapter->chapter_id}}"
+                        class="inp-chapter">
                 </div>
                 @endforeach
             </td>
@@ -129,8 +132,8 @@ Môn học
                 <form action="{{route('chapters.delete',$chapter->chapter_id)}}" method="POST">
                     @csrf
 
-                    <a href="" class="edit-chapter" chapter-id="{{$chapter->chapter_id}}"
-                        data-toogle="tooltip" title="Chỉnh sửa chương">
+                    <a href="" class="edit-chapter" chapter-id="{{$chapter->chapter_id}}" data-toogle="tooltip"
+                        title="Chỉnh sửa chương">
                         <i class="fas fa-edit"></i>
                     </a>&nbsp;&nbsp;&nbsp;&nbsp;
 
@@ -251,7 +254,8 @@ Môn học
             "language": {
                 "url": "//cdn.datatables.net/plug-ins/1.10.18/i18n/Vietnamese.json"
             },
-            "order": [[ 0, "asc" ]]
+            "order": [[ 0, "asc" ]],
+            "bPaginate": false,
         });
 
 

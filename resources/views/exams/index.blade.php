@@ -82,7 +82,12 @@
     $(function () {
         $("#example1").DataTable({
           "responsive": true, "lengthChange": false, "autoWidth": false,
-          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+          "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+          "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.18/i18n/Vietnamese.json"
+            },
+            "order": [[ 0, "asc" ]],
+            "bPaginate": false,
         }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
         $('#example2').DataTable({
           "paging": true,
@@ -92,6 +97,11 @@
           "info": true,
           "autoWidth": false,
           "responsive": true,
+          "language": {
+                "url": "//cdn.datatables.net/plug-ins/1.10.18/i18n/Vietnamese.json"
+            },
+            "order": [[ 0, "asc" ]],
+            "bPaginate": false,
         });
       });
 </script>

@@ -74,8 +74,10 @@ class SubjectController extends Controller
  
     public function delete(Subject $subject)
     {
-        $subject->chapters()->delete();
+        if($subject->chapters()->exists()){
+            return back()->with('error','Không thể xoá môn này vì còn chương');
+        }
         $subject->delete();
-        return back();
+        return back()->with('success','Đã xoá thành công');
     }
 }

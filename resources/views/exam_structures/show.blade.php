@@ -24,7 +24,7 @@
                         <div class="card-body">
                             @if (isset($randomQuestions) && count($randomQuestions) > 0)
                                 @foreach ($randomQuestions as $question)
-                                    <input type="hidden" name="questions[]" value="{{$question}}">
+                                    <input type="hidden" name="questions[{{$question->question_id}}][]" value="{{$question->question_name}}">
                                     <div class="card card-danger">
                                         <div class="card-header">
                                             <h3 class="card-title">{{ $question['question_code'] }} - {{$question['question_name']}}</h3>
@@ -39,7 +39,7 @@
                                                             <input type="text" class="form-control" name="answer_content[]" value="{{$item['answer_content']}}">
                                                         @endif
                                                     </div>
-                                                    <input type="hidden" name="answers" value="{{$question->answers}}">
+                                                    <input type="hidden" name="answers[{{$question->question_id}}][]" value="{{$item['answer_content']}}">
                                                 @endforeach
                                             </div>
                                         </div>
@@ -49,7 +49,7 @@
                             @else
                                 <ol>
                                     @foreach ($exam->questions as $question)
-                                    <input type="hidden" name="questions[]" value="{{$question}}">
+                                    <input type="hidden" name="questions[{{$question->question_id}}][]" value="{{$question->question_name}}">
                                     <li>{{$question['question_code']}} - {{ $question['question_name'] }}</li>
                                     <ol style="padding-left: 40px;">
                                         @foreach ($question->answers as $item)
@@ -60,7 +60,7 @@
                                             <span class="badge badge-secondary">{{$item['answer_content']}}</span>
                                             @endif
                                         </li>
-                                        <input type="hidden" name="answers" value="{{$question->answers}}">
+                                        <input type="hidden" name="answers[{{$question->question_id}}][]" value="{{$item['answer_content']}}">
                                         @endforeach
                                     </ol>
                                     @endforeach

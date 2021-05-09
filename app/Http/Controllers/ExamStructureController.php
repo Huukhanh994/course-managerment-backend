@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Chapter;
 use App\Models\Exam;
 use App\Models\ExamStructure;
 use App\Models\Question;
+use App\Models\Subject;
 use Illuminate\Http\Request;
 use PDF;
 
@@ -19,7 +19,7 @@ class ExamStructureController extends Controller
     public function index()
     {
         $examStructures = ExamStructure::all();
-        $data = Chapter::all();
+        $data = Subject::all();
         return view('exam_structures.index', compact('examStructures', 'data'));
     }
 
@@ -42,23 +42,27 @@ class ExamStructureController extends Controller
     public function store(Request $request)
     {
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
-
-
         $section = $phpWord->addSection();
-
-        $description = $request->get('answer_content');
-
-
-        $section->addImage("http://itsolutionstuff.com/frontTheme/images/logo.png");
-        $section->addText(array($description));
-
+        $question = $request->get('questions');
+        $description = $request->get('answers');
+        // dd($request);
+        // $section->addImage("http://itsolutionstuff.com/frontTheme/images/logo.png");
+        foreach ($question as $key1 => $value) {
+            foreach ($value as $key2 => $value2) {
+                $section->addText('' . $value2);
+                $text = '';
+                foreach ($description[$key1] as $key3 => $value3) {
+                    $text .= $value3 . '     ';
+                }
+                $section->addText('' . $text);
+            }
+        }
 
         $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
         try {
             $objWriter->save(storage_path('helloWorld.docx'));
         } catch (Exception $e) {
         }
-
 
         return response()->download(storage_path('helloWorld.docx'));
     }

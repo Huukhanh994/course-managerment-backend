@@ -17,8 +17,9 @@ class CreateExamStructuresTable extends Migration
             $table->id('exam_structure_id');
             $table->unsignedBigInteger('chapter_id');
             $table->foreign('chapter_id')->references('chapter_id')->on('chapters')->onDelete('cascade');
-            $table->unsignedBigInteger('question_id');
+            $table->unsignedBigInteger('question_id')->nullable();
             $table->foreign('question_id')->references('question_id')->on('questions')->onDelete('cascade');
+            $table->string('exam_structure_name')->nullable();
             $table->integer('exam_structure_quantity')->nullable();
             $table->integer('exam_structure_ez')->nullable();
             $table->integer('exam_structure_me')->nullable();
