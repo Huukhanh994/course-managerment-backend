@@ -24,4 +24,9 @@ class ExamStructure extends Model
     {
         return $this->belongsTo(Question::class, 'question_id');
     }
+
+    public function exams()
+    {
+        return $this->hasMany(Exam::class, 'exam_structure_id');
+    }
 }

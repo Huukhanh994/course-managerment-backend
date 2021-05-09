@@ -19,7 +19,8 @@ class ExamsController extends Controller
     {
         $exams = Exam::with('questions.answers')->get();
         $data = $this->examRepository->prepareData();
-        return view('exams.index', compact('exams', 'data'));
+        $examStructures = ExamStructure::all();
+        return view('exams.index', compact('exams', 'data', 'examStructures'));
     }
 
     public function store(Request $request)
@@ -48,17 +49,45 @@ class ExamsController extends Controller
 
     public function storeRandom(Request $request)
     {
+        $input = $request->except('_token');
         $examStructure = ExamStructure::whereExamStructureId($request->exam_structure_id)->first();
+        $exam = Exam::create([
+            'exam_code' => $input['exam_code'],
+            'exam_name' => $input['exam_name'],
+            'exam_type' => $input['exam_type'],
+            'exam_end_time' => $input['exam_end_time'],
+            'exam_structure_id' => $input['exam_structure_id']
+        ]);
         $data = [];
         if (isset($examStructure['exam_structure_ez'])) {
             $data['ez'] = Question::with('answers')->where('question_level', '=', 'Dễ')->inRandomOrder()->limit($examStructure['exam_structure_ez'])->get();
+
+            $exam->questions()->sync($data['ez']);
         }
         if (isset($examStructure['exam_structure_me'])) {
             $data['me'] = Question::with('answers')->where('question_level', '=', 'Trung bình')->inRandomOrder()->limit($examStructure['exam_structure_me'])->get();
+
+            $exam->questions()->sync($data['me']);
         }
         if (isset($examStructure['exam_structure_ha'])) {
             $data['ha'] = Question::with('answers')->where('question_level', '=', 'Khó')->inRandomOrder()->limit($examStructure['exam_structure_ha'])->get();
+
+            $exam->questions()->sync($data['ha']);
         }
-        return view('exams.random', compact('data'));
+
+        return view('exams.random', compact('data', 'input'));
+    }
+
+    public function update(Exam $exam, Request $request)
+    {
+        $input = $request->except('_token');
+
+        $result = $this->examRepository->updateExam($input, $exam['exam_id']);
+
+        if ($result) {
+            return redirect()->route('exams.index')->with('success', 'Cập nhật đề thi thành công');
+        } else {
+            return redirect()->route('exams.index')->with('error', 'Cập nhật thất bại');
+        }
     }
 }

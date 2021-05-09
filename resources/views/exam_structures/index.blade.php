@@ -94,7 +94,7 @@ Cơ cấu đề thi
                     data-target=".modal-lg-edit{{$item['exam_structure_id']}}">
                     <i class="fas fa-edit"></i>
                 </a>&nbsp;&nbsp;&nbsp;&nbsp;
-                <a href="#" style="color:red;" class="remove" idAction=2 data-practest-id="">
+                <a href="#" style="color:red;" class="remove" data-id="{{$item['exam_structure_id']}}" idAction=2 data-practest-id="">
                     <i class="far fa-trash-alt"></i>
                 </a>
             </td>
@@ -132,6 +132,45 @@ Cơ cấu đề thi
                 }
               });
         });
+
+
+        $(".remove").click(function() {
+        var examStructureId = $(this).data('id');
+        Swal.fire({
+        title: "Delete?",
+        text: "Please ensure and then confirm!",
+        type: "warning",
+        showCancelButton: !0,
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel!",
+        reverseButtons: !0
+        }).then(function (e) {
+        
+        if (e.value === true) {
+        var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        
+        $.ajax({
+        type: 'GET',
+        url: "exam-structures/delete/"+examStructureId,
+        data: {_token: CSRF_TOKEN},
+        dataType: 'JSON',
+        success: function (response) {
+        
+        if (response.success) {
+        Swal.fire('Saved!', response.success, 'success')
+        }
+        location.reload();
+        }
+        });
+        
+        } else {
+        e.dismiss;
+        }
+        
+        }, function (dismiss) {
+        return false;
+        })
+        })
 } );
 </script>
 @endpush

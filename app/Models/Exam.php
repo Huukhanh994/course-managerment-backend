@@ -32,7 +32,7 @@ class Exam extends Model
 
     protected $table = 'exams';
     protected $primaryKey = 'exam_id';
-    protected $fillable = ['exam_code', 'exam_name', 'exam_type', 'exam_end_time'];
+    protected $fillable = ['exam_code', 'exam_name', 'exam_type', 'exam_end_time', 'exam_structure_id'];
 
     public function questions()
     {
@@ -42,5 +42,10 @@ class Exam extends Model
     public function answers()
     {
         return $this->hasMany(Answer::class, 'exam_id');
+    }
+
+    public function examStructure()
+    {
+        return $this->belongsTo(ExamStructure::class, 'exam_structure_id');
     }
 }

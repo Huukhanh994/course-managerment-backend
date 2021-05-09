@@ -45,4 +45,9 @@ class ExamRepository extends BaseRepository
 
         return $exam;
     }
+
+    public function updateExam($input, $id)
+    {
+        return $this->getQueryEloquent()->whereExamId($id)->update($input);
+    }
 }

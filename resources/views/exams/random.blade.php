@@ -16,7 +16,7 @@
                             <div class="card-header">
                                 <h3 class="card-title">
                                     <i class="fas fa-text-width"></i>
-                                    Cấu trúc đề thiád
+                                    Cấu trúc đề thi
                                 </h3>
                             </div>
                             <!-- /.card-header -->
