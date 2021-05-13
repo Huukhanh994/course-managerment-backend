@@ -54,7 +54,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputPassword1">Thuộc câu hỏi</label>
+                                <label for="exampleInputPassword1">Thuộc cơ cấu đề thi</label>
                                 <select name="exam_structure_id" id="" class="form-control">
                                     @foreach ($examStructures as $val)
                                         @if ($item['exam_structure_id'] === $val['exam_structure_id'])

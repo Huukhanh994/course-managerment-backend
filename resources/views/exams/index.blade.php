@@ -8,9 +8,10 @@
     <div class="card-header">
         <a href="#" class="btn btn-info" data-toggle="modal"
             data-target="#modal-lg-add">Thêm</a>
-        <a href="#" class="btn btn-default" data-toggle="modal" data-target="#modal-lg-add-random">Thêm Random</a>
+        <a href="#" class="btn btn-default" data-toggle="modal" data-target="#modal-lg-add-random">Thêm câu hỏi theo cơ cấu đề</a>
         @include('exams.modal.form_add_random',['data' => $data['examStructures']])
         @include('exams.modal.form_add',['data' => $data['questions']])
+        @include('exams.modal.form_random_questions',['exams' => $exams,'examStructures' => $examStructures])
     </div>
     <!-- /.card-header -->
     <div class="card-body">
@@ -43,8 +44,9 @@
                     </td>
                     <td>
                         <a href="{{ route('exam_structures.show',$item['exam_id']) }}" class="btn btn-success">Xem cấu trúc đề thi</a>
-                        <a href="{{ route('exam_structures.random',$item['exam_id']) }}" class="btn btn-info">Tạo đề thi ngẫu nhiên</a>
-                          <a href="{{route('exam_structures.downloadPdf',$item['exam_id'])}}" class="btn btn-dark">PDF</a>
+                        <a href="#" class="btn btn-info" data-toggle="modal" data-target="#modal-lg-random{{$item['exam_id']}}">Thêm câu hỏi tự
+                          động</a>
+                        <a href="{{route('exam_structures.downloadPdf',$item['exam_id'])}}" class="btn btn-dark">PDF</a>
                         <a href="#" class="btn btn-warning"
                             data-toggle="modal" data-target="#modal-lg-edit{{$item['exam_id']}}">Edit</a>
                         <button type="button" class="btn btn-danger btn-delete" data-id="{{ $item['exam_id'] }}">

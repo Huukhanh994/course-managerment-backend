@@ -20,7 +20,8 @@ class ExamStructureController extends Controller
     {
         $examStructures = ExamStructure::all();
         $data = Subject::all();
-        return view('exam_structures.index', compact('examStructures', 'data'));
+        $result = Subject::with('chapters')->get()->toArray();
+        return view('exam_structures.index', compact('examStructures', 'data', 'result'));
     }
 
     /**
@@ -70,15 +71,16 @@ class ExamStructureController extends Controller
     public function storeExamStructure(Request $request)
     {
         $input = $request->except('_token');
-        $examStructures = ExamStructure::create([
-            'exam_structure_quantity' => $input['exam_structure_quantity'],
-            'exam_structure_name' => $input['exam_structure_name'],
-            'exam_structure_ez' => $input['exam_structure_ez'],
-            'exam_structure_me' => $input['exam_structure_me'],
-            'exam_structure_ha' => $input['exam_structure_ha'],
-            'chapter_id' => $input['chapter_id'],
-        ]);
-
+        for ($i = 0; $i < count($input['chapter_id']); $i++) {
+            $examStructures = ExamStructure::create([
+                'exam_structure_quantity' => $input['exam_structure_quantity'][$i],
+                'exam_structure_name' => $input['exam_structure_name'][$i],
+                'exam_structure_ez' => $input['exam_structure_ez'][$i],
+                'exam_structure_me' => $input['exam_structure_me'][$i],
+                'exam_structure_ha' => $input['exam_structure_ha'][$i],
+                'chapter_id' => $input['chapter_id'][$i],
+            ]);
+        }
         if ($examStructures) {
             return redirect()->route('exam_structures.index')->with('success', 'Thêm cấu trúc đề thành công');
         }
@@ -147,9 +149,11 @@ class ExamStructureController extends Controller
         }
     }
 
-    public function randomExam(Exam $exam)
+    public function randomExam(Exam $exam, Request $request)
     {
-        $randomQuestions = Question::with('answers')->inRandomOrder()->limit(2)->get();
+        $input = $request->except('_token');
+
+        $randomQuestions = Question::with('answers')->inRandomOrder()->limit($input['quantity'])->get();
 
         return view('exam_structures.show', compact('randomQuestions', 'exam'));
     }
