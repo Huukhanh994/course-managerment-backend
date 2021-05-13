@@ -58,7 +58,7 @@ Route::prefix('exam-structures')->name('exam_structures.')->group(function () {
     Route::post('/store', [ExamStructureController::class, 'store'])->name('store');
     Route::post('/storeExamStructure', [ExamStructureController::class, 'storeExamStructure'])->name('storeExamStructure');
     Route::get('{exam}/show', [ExamStructureController::class, 'show'])->name('show');
-    Route::get('{exam}/random', [ExamStructureController::class, 'randomExam'])->name('random');
+    Route::get('/{exam}/random', [ExamStructureController::class, 'randomExam'])->name('random');
     Route::get('{exam}/downloadPdf', [ExamStructureController::class, 'downloadPdf'])->name('downloadPdf');
     Route::get('/delete/{examStructureId}', [ExamStructureController::class, 'delete'])->name('delete');
     Route::post('/{id}/update', [ExamStructureController::class, 'update'])->name('update');
