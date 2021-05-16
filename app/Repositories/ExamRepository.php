@@ -32,7 +32,7 @@ class ExamRepository extends BaseRepository
     public function prepareData()
     {
         $data['questions'] = Question::all();
-        $data['examStructures'] = ExamStructure::all();
+        $data['examStructures'] = ExamStructure::select('exam_structure_name')->groupBy('exam_structure_name');
 
         return $data;
     }

@@ -30,13 +30,13 @@
           <td>{{ $item['question_code'] }}</td>
           <td>{{ $item['question_name'] }}</td>
           <td>@switch( $item['question_level'])
-            @case(1)
+            @case('Dễ')
             Dễ
             @break
-            @case(2)
+            @case('Trung Bình')
             Trung bình
             @break
-            @case(3)
+            @case('Khó')
             Khó
             @break
             @endswitch</td>

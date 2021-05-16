@@ -24,9 +24,9 @@
                         <div class="form-group">
                             <label for="exampleInputPassword1">Mức độ câu hỏi</label>
                             <select name="question_level" id="" class="form-control">
-                                <option value="1">Dễ</option>
-                                <option value="2">Trung bình</option>
-                                <option value="3">Khó</option>
+                                <option value="Dễ">Dễ</option>
+                                <option value="Trung Bình">Trung bình</option>
+                                <option value="Khó">Khó</option>
                             </select>
                         </div>
                         <div class="form-group">

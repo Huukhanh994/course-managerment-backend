@@ -27,9 +27,9 @@
                         <div class="form-group">
                             <label for="exampleInputPassword1">Mức độ câu hỏi</label>
                             <select name="question_level" id="" class="form-control">
-                                <option value="1" @if ($item['question_level']==1) selected @endif>Dễ</option>
-                                <option value="2" @if ($item['question_level']==2) selected @endif>Trung bình</option>
-                                <option value="3" @if ($item['question_level']==3) selected @endif>Khó</option>
+                                <option value="1" @if ($item['question_level']=='Dễ') selected @endif>Dễ</option>
+                                <option value="2" @if ($item['question_level']=='Trung Bình') selected @endif>Trung bình</option>
+                                <option value="3" @if ($item['question_level']=='Khó') selected @endif>Khó</option>
                             </select>
                         </div>
                         <div class="form-group">

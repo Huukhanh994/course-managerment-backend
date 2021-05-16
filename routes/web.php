@@ -18,7 +18,8 @@ use App\Http\Controllers\QuestionsController;
 |
 */
 
-Route::get('/', [SubjectController::class, 'index'])->name('index');
+Route::get('/', [ExamsController::class, 'index']);
+
 
 
 Route::get('/dashboard', function () {

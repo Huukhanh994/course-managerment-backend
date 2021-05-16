@@ -71,10 +71,14 @@ class ExamStructureController extends Controller
     public function storeExamStructure(Request $request)
     {
         $input = $request->except('_token');
+        $unique=ExamStructure::where('exam_structure_name',$input['exam_structure_name'])->first();
+        if($unique){
+            return back()->with('error','Mã đề này đã có');
+        }
         for ($i = 0; $i < count($input['chapter_id']); $i++) {
             $examStructures = ExamStructure::create([
                 'exam_structure_quantity' => $input['exam_structure_quantity'][$i],
-                'exam_structure_name' => $input['exam_structure_name'][$i],
+                'exam_structure_name' => $input['exam_structure_name'],
                 'exam_structure_ez' => $input['exam_structure_ez'][$i],
                 'exam_structure_me' => $input['exam_structure_me'][$i],
                 'exam_structure_ha' => $input['exam_structure_ha'][$i],

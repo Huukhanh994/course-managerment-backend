@@ -21,7 +21,9 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                @foreach ($data['ez'] as $questionEz)
+                                @foreach ($data['ez'] as $val)
+                                @foreach ($val as $questionEz)
+                                    
                                 <input type="hidden" name="questions[]" value="{{$questionEz}}">
                                 <div class="card card-success">
                                     <div class="card-header">
@@ -47,9 +49,12 @@
                                     <!-- /.card-body -->
                                 </div>
                                 @endforeach
+                                @endforeach
                             </div>
                             <div class="card-body">
-                                @foreach ($data['me'] as $questionEz)
+                                @foreach ($data['me'] as $val)
+                                @foreach ($val as $questionEz)
+                                    
                                 <input type="hidden" name="questions[]" value="{{$questionEz}}">
                                 <div class="card card-warning">
                                     <div class="card-header">
@@ -74,9 +79,12 @@
                                     <!-- /.card-body -->
                                 </div>
                                 @endforeach
+                                @endforeach
                             </div>
                             <div class="card-body">
-                                @foreach ($data['ha'] as $questionEz)
+                                @foreach ($data['ha'] as $val)
+                                @foreach ($val as $questionEz)
+                                    
                                 <input type="hidden" name="questions[]" value="{{$questionEz}}">
                                 <div class="card card-danger">
                                     <div class="card-header">
@@ -100,6 +108,7 @@
                                     </div>
                                     <!-- /.card-body -->
                                 </div>
+                                @endforeach
                                 @endforeach
                             </div>
                             <!-- /.card-body -->

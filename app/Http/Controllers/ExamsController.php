@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Exam;
 use App\Models\ExamStructure;
-use Illuminate\Http\Request;
-use App\Repositories\ExamRepository;
 use App\Models\Question;
+use App\Repositories\ExamRepository;
+use Illuminate\Http\Request;
 
 class ExamsController extends Controller
 {
@@ -18,7 +18,9 @@ class ExamsController extends Controller
     public function index()
     {
         $exams = Exam::with('questions.answers')->get();
-        $data = $this->examRepository->prepareData();
+        $data['questions'] = Question::all();
+        $data['examStructures'] = ExamStructure::select('exam_structure_name')->groupBy('exam_structure_name')->get();
+
         $examStructures = ExamStructure::all();
         return view('exams.index', compact('exams', 'data', 'examStructures'));
     }
@@ -50,31 +52,43 @@ class ExamsController extends Controller
     public function storeRandom(Request $request)
     {
         $input = $request->except('_token');
-        $examStructure = ExamStructure::whereExamStructureId($request->exam_structure_id)->first();
+        $examStructure = ExamStructure::where('exam_structure_name', $request->exam_structure_name)->get();
         $exam = Exam::create([
             'exam_code' => $input['exam_code'],
             'exam_name' => $input['exam_name'],
             'exam_type' => $input['exam_type'],
             'exam_end_time' => $input['exam_end_time'],
-            'exam_structure_id' => $input['exam_structure_id']
+            // 'exam_structure_name' => $input['exam_structure_name'],
         ]);
         $data = [];
-        if (isset($examStructure['exam_structure_ez'])) {
-            $data['ez'] = Question::with('answers')->where('question_level', '=', 'Dễ')->inRandomOrder()->limit($examStructure['exam_structure_ez'])->get();
+        foreach ($examStructure as $key => $value) {
+            if (isset($value['exam_structure_ez'])) {
+                $data['ez'][$key] = Question::with('answers')->where('question_level', '=', 'Dễ')
+                ->where('chapter_id',$value['chapter_id'])
+                ->inRandomOrder()->limit($value['exam_structure_ez'])
+                ->get();
 
-            $exam->questions()->sync($data['ez']);
+                $exam->questions()->sync($data['ez'][$key]);
+            }
+            if (isset($value['exam_structure_me'])) {
+                $data['me'][$key] = Question::with('answers')->where('question_level', '=', 'Trung bình')
+                ->where('chapter_id',$value['chapter_id'])
+                ->inRandomOrder()->limit($value['exam_structure_me'])
+                ->get();
+
+                $exam->questions()->sync($data['me'][$key]);
+            }
+            if (isset($value['exam_structure_ha'])) {
+                $data['ha'][$key] = Question::with('answers')->where('question_level', '=', 'Khó')
+                ->where('chapter_id',$value['chapter_id'])
+                ->inRandomOrder()->limit($value['exam_structure_ha'])
+                ->get();
+
+            $exam->questions()->sync($data['ha'][$key]);
+            }
+    
+
         }
-        if (isset($examStructure['exam_structure_me'])) {
-            $data['me'] = Question::with('answers')->where('question_level', '=', 'Trung bình')->inRandomOrder()->limit($examStructure['exam_structure_me'])->get();
-
-            $exam->questions()->sync($data['me']);
-        }
-        if (isset($examStructure['exam_structure_ha'])) {
-            $data['ha'] = Question::with('answers')->where('question_level', '=', 'Khó')->inRandomOrder()->limit($examStructure['exam_structure_ha'])->get();
-
-            $exam->questions()->sync($data['ha']);
-        }
-
         return view('exams.random', compact('data', 'input'));
     }
 

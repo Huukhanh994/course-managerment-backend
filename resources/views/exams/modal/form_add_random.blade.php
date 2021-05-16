@@ -7,16 +7,16 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <form id="quickForm" method="POST"
-                action="{{ route('exams.storeRandom') }}">
+            <form id="quickForm" method="POST" action="{{ route('exams.storeRandom') }}">
                 @csrf
-            <div class="modal-body">
+                <div class="modal-body">
                     <div class="card-body">
                         <div class="form-group">
                             <label for="exampleInputPassword1">Chọn cấu trúc</label>
-                            <select class="form-control" name="exam_structure_id">
+                            <select class="form-control" name="exam_structure_name">
                                 @foreach ($data as $item)
-                                    <option value="{{$item['exam_structure_id']}}">{{ $item['exam_structure_name'] }}</option>
+                                <option value="{{$item['exam_structure_name']}}">{{ $item['exam_structure_name'] }}
+                                </option>
                                 @endforeach
                             </select>
                         </div>
@@ -27,7 +27,8 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">Tên đề</label>
-                            <input type="text" name="exam_name" class="form-control" id="exampleInputPassword1" placeholder="Tên đề">
+                            <input type="text" name="exam_name" class="form-control" id="exampleInputPassword1"
+                                placeholder="Tên đề">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">Loai đề</label>

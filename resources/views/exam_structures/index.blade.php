@@ -22,20 +22,10 @@ Cơ cấu đề thi
                 <form action="{{route('exam_structures.storeExamStructure')}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-content div-examStructute">
+                        <div class=>
+                            <input type="text" name="exam_structure_name" class="form-control" placeholder="Nhập tên cơ cấu đề thi">
+                        </div>
                             <div class="row exam_structure-div" id="item_1">
-                                {{-- <div class="col-2">
-                                    <select class="form-control select-subject" name="subject_id[]">
-                                        <option value="">--Chọn Môn--</option>
-                                        @foreach ($data as $item)
-                                        <option value="{{$item['subject_id']}}">{{ $item['subject_name'] }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-2">
-                                    <select class="form-control select-chapter" name="chapter_id[]">
-                                        <option value="">--Chọn Chương--</option>
-                                    </select>
-                                </div> --}}
                                 <div class="col-2">
                                     <select class="" name="chapter_id[]">
                                         @foreach ($result as $item)
@@ -46,9 +36,6 @@ Cơ cấu đề thi
                                         </optgroup>
                                         @endforeach
                                     </select>
-                                </div>
-                                <div class="col-2">
-                                    <input type="text" name="exam_structure_name[]" class="form-control" placeholder="Nhập tên cơ cấu đề thi">
                                 </div>
                                 <div class="col-2">
                                     <input type="text" name="exam_structure_quantity[]" class="form-control" placeholder="Nhập tổng số câu hỏi của cơ cấu đề thi">
@@ -64,13 +51,13 @@ Cơ cấu đề thi
                                 </div>
                             </div>
                             <div class="col-2">
-                                <button type="button" class="btn btn-warning" id="add-item">+ Add</button>
-                                <button type="button" class="btn btn-danger" id="delete">- Remove</button>
+                                <button type="button" class="btn btn-warning" id="add-item">+ Thêm chương</button>
+                                <button type="button" class="btn btn-danger" id="delete">- Xoá</button>
                             </div>
                     </div>
                     <div class="modal-footer justify-content-between">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-primary">Lưu</button>
                     </div>
                 </form>
             </div>
@@ -203,9 +190,6 @@ Cơ cấu đề thi
                         </optgroup>
                         @endforeach
                     </select>
-                </div>
-                <div class="col-2">
-                    <input type="text" name="exam_structure_name[]" class="form-control" placeholder="Nhập tên cơ cấu đề thi">
                 </div>
                 <div class="col-2">
                     <input type="text" name="exam_structure_quantity[]" class="form-control"
